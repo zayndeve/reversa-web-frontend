@@ -8,19 +8,19 @@ import {
 // Main product model (from backend)
 export interface Product {
   _id: string;
-  productStatus: ProductStatus;
-  productCategory: ProductCategory;
-  productName: string;
-  productPrice: number;
-  productLeftCount: number;
-  productSize?: ProductSize;
-  productDesc?: string;
-  productImages: string[];
-  productViews: number;
-  productVolume?: number;
-  productTags?: ProductTag[];
-  productRating?: number;
-  updatedAt: Date;
+  ProductStatus: ProductStatus;
+  ProductCategory: ProductCategory;
+  ProductName: string;
+  ProductPrice: number;
+  ProductLeftCount: number;
+  ProductSize?: ProductSize;
+  ProductDesc?: string;
+  ProductImages: string[];
+  ProductViews: number;
+  ProductVolume?: number;
+  ProductTags?: ProductTag[];
+  ProductRating?: number;
+  UpdatedAt: Date;
 }
 export interface ProductInquiry {
   order: string;

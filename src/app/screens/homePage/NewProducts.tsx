@@ -30,24 +30,24 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     >
       <div className="product-img-wrapper">
         <img
-          src={`${serverApi}/${product.productImages[0]}`}
-          alt={product.productName}
+          src={`${serverApi}/${product.ProductImages[0]}`}
+          alt={product.ProductName}
         />
-        {product.productTags?.includes(ProductTag.HOT) && (
+        {product.ProductTags?.includes(ProductTag.HOT) && (
           <span className="product-badge hot">HOT</span>
         )}
-        {product.productTags?.includes(ProductTag.BESTSELLER) && (
+        {product.ProductTags?.includes(ProductTag.BESTSELLER) && (
           <span className="product-badge bestseller">BESTSELLER</span>
         )}
       </div>
       <div className="product-info">
-        <h3 className="product-name">{product.productName}</h3>
+        <h3 className="product-name">{product.ProductName}</h3>
         <div className="product-price">
-          <span className="price-now">${product.productPrice}</span>
-          <span className="price-old">${product.productPrice + 15}</span>
+          <span className="price-now">${product.ProductPrice}</span>
+          <span className="price-old">${product.ProductPrice + 15}</span>
         </div>
         <div className="product-rating">
-          {renderStars(product.productRating ?? 4)}
+          {renderStars(product.ProductRating ?? 4)}
         </div>
       </div>
     </div>
