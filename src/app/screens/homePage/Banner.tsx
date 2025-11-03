@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Button } from "@mui/material";
 import "../../css/homePage.css";
 import { useNavigate } from "react-router-dom";
-import { useGlobal } from "../../../app/hooks/useGlobal"; // ✅ Import context
+import { useGlobal } from "../../hooks/useGlobal"; // ✅ Import context
 
 export default function Banner() {
   const navigate = useNavigate();

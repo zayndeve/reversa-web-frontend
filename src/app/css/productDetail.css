@@ -142,3 +142,23 @@
     transform: rotate(360deg);
   }
 }
+
+.back-btnn {
+  width: 150px;
+  height: 40px;
+  margin-top: 190px;
+  background-color: transparent;
+  border: 1px solid #6c63ff;
+  color: #6c63ff;
+  padding: 12px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.back-btnn:hover {
+  background-color: #6c63ff;
+  color: #fff;
+}

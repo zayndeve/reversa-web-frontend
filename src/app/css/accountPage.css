@@ -1,0 +1,423 @@
+/* === GLOBAL WRAPPER === */
+.account-wrapper {
+  display: flex;
+  padding: 60px 24px;
+  max-width: 1280px;
+  margin: 140px auto;
+  gap: 32px;
+  background: linear-gradient(to bottom, #f3f6fc, #ffffff);
+  border-radius: 20px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.05);
+  font-family: "Inter", sans-serif;
+}
+
+/* === SIDEBAR === */
+.account-sidebar {
+  width: 260px;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(25, 38, 72, 0.08);
+  padding: 32px 24px;
+  height: fit-content;
+  min-height: 400px;
+}
+
+.account-sidebar h3 {
+  font-size: 19px;
+  font-weight: 600;
+  color: #3c4fe0;
+  margin-bottom: 28px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+.account-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account-sidebar li {
+  position: relative;
+  padding: 14px 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  cursor: pointer;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.account-sidebar li:hover {
+  background-color: #f0f3ff;
+  color: #3c4fe0;
+  font-weight: 500;
+}
+
+.account-sidebar li.active {
+  background-color: #e8edff;
+  color: #3c4fe0;
+  font-weight: 600;
+}
+
+.account-sidebar li .active-line {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 4px;
+  border-radius: 2px;
+  background-color: #3c4fe0;
+}
+
+.account-sidebar li .tab-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.account-sidebar li svg {
+  color: #3c4fe0;
+  transition: color 0.2s ease;
+}
+
+.account-sidebar li:hover svg,
+.account-sidebar li.active svg {
+  color: #3c4fe0;
+}
+
+/* === PAGE HEADERS === */
+.dashboard-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 6px;
+}
+
+.dashboard-subtitle {
+  font-size: 14px;
+  color: #7a7a7a;
+  margin-bottom: 30px;
+}
+
+.order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+/* === USER INFO PAGE === */
+.dashboard-container {
+  margin-top: -23px;
+}
+
+.profile-section {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.profile-image-card {
+  width: 240px;
+  text-align: center;
+  background: #f8faff;
+  border-radius: 16px;
+  padding: 24px 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.profile-img-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 14px;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #3c4fe0;
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #3c4fe0;
+  color: white;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.profile-role {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+
+/* === USER INFO FIELDS === */
+.info-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+
+.field-box label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4d4d4d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.field-box label svg {
+  color: #3c4fe0;
+}
+
+.field-box div {
+  background: #f4f6fa;
+  padding: 12px 16px;
+  border-radius: 10px;
+  color: #333;
+  font-size: 14px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+/* === ORDER TABLE === */
+.order-table-wrapper {
+  overflow-x: auto;
+  margin-top: 30px;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 880px;
+  background-color: #fff;
+}
+
+.order-table thead {
+  background-color: #3c4fe0;
+  color: #ffffff;
+}
+
+.order-table th {
+  text-align: left;
+  padding: 16px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.order-table td {
+  padding: 18px 20px;
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  vertical-align: middle;
+  border-top: 1px solid #f0f2f5;
+}
+
+.order-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.order-table tbody tr:hover {
+  background-color: #f5f8ff;
+  transition: background 0.2s ease;
+  cursor: pointer;
+}
+
+.order-thumb {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #dbe1ef;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.order-details-row td {
+  background-color: #f9fbff;
+  border-top: none;
+  padding: 16px 20px;
+}
+
+.order-details-box {
+  padding: 10px 0;
+  font-size: 14px;
+  color: #444;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* === Status Pill === */
+.status-pill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  background-color: #edf2ff;
+  color: #3c4fe0;
+}
+
+.status-pill.paid {
+  background-color: #e6f9ed;
+  color: #1f9254;
+}
+
+.status-pill.pending {
+  background-color: #fff5e6;
+  color: #e69b00;
+}
+
+.status-pill.failed {
+  background-color: #ffe6e6;
+  color: #e53e3e;
+}
+
+/* === Action Buttons === */
+.hide-btn {
+  background: none;
+  border: none;
+  color: #3c4fe0;
+  padding: 8px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.hide-btn:hover {
+  background-color: rgba(60, 79, 224, 0.08);
+}
+/* === SETTINGS FORM === */
+.profile-section {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+/* === PROFILE IMAGE CARD === */
+.profile-image-card {
+  width: 240px;
+  text-align: center;
+  background: #f8faff;
+  border-radius: 16px;
+  padding: 24px 16px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+}
+
+.profile-img-wrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 14px;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #3c4fe0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.upload-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #3c4fe0;
+  color: white;
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-name {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-top: 8px;
+}
+
+/* === INFO FIELDS === */
+.info-fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 40px;
+}
+
+.field-box label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4d4d4d;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.field-box input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #333;
+  background: #f9f9fb;
+  border-radius: 10px;
+  border: 1px solid #e0e3e7;
+  transition: border 0.2s ease;
+}
+
+.field-box input:focus {
+  outline: none;
+  border-color: #3c4fe0;
+  background-color: #fff;
+}
+
+/* === Save Button === */
+.pay-btn {
+  background-color: #3c4fe0;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.pay-btn:hover {
+  background-color: #2f3ecf;
+}

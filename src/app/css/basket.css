@@ -130,13 +130,13 @@
   bottom: -4px;
   width: 0;
   height: 2px;
-  background-color: #b98d49;
+  background-color: #008dec !important;
   transition: width 0.3s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #b98d49;
+  color: #008dec !important;
 }
 
 .nav-link:hover::after,

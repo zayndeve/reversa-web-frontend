@@ -23,7 +23,7 @@
 .footer-column h4 {
   font-size: 18px;
   margin-bottom: 20px;
-  color: #b98d49;
+  color: #008dec;
   font-weight: 600;
 }
 
@@ -50,7 +50,7 @@
 }
 
 .footer-column ul li a:hover {
-  color: #b98d49;
+  color: #008dec;
 }
 
 .newsletter-form {
@@ -70,7 +70,7 @@
 .newsletter-form button {
   padding: 12px 20px;
   border: none;
-  background: linear-gradient(45deg, #b98d49, #e1b574);
+  background: linear-gradient(45deg, #0588b4, #c7c3be);
   color: #fff;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
@@ -83,7 +83,7 @@
 }
 
 .newsletter-form button:hover {
-  background: linear-gradient(45deg, #a07a3d, #d0a456);
+  background: linear-gradient(45deg, #b18f8f, #089df9);
   transform: translateY(-2px);
 }
 

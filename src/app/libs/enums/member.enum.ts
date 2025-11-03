@@ -9,4 +9,5 @@ export enum MemberStatus {
 }
 export enum AuthProvider {
   LOCAL = "LOCAL",
+  GOOGLE = "GOOGLE",
 }

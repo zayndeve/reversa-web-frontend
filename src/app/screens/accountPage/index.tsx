@@ -1,5 +1,5 @@
-import { Container } from "@mui/material";
+import UserSettingsPage from "./UserSettingsPage";
 
 export default function AccountPage() {
-  return <Container>AccountPage</Container>;
+  return <UserSettingsPage />;
 }

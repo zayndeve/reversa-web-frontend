@@ -5,8 +5,11 @@ import { ProductTag } from '../../../app/libs/enums/products.enum';
 import { serverApi } from '../../../app/libs/config';
 import Swiper from '../../../app/components/common/Swiper';
 import '../../css/homePage.css';
+import { useNavigate } from 'react-router-dom/dist';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const navigate = useNavigate();
+
   const renderStars = (rating: number) => {
     const fullStars = Math.floor(rating);
     const halfStar = rating % 1 >= 0.5;
@@ -20,7 +23,11 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   };
 
   return (
-    <div className="product-card">
+    <div
+      className="product-card"
+      onClick={() => navigate(`/products/${product._id}`)}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="product-img-wrapper">
         <img
           src={`${serverApi}/${product.productImages[0]}`}
@@ -46,6 +53,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     </div>
   );
 };
+
 
 export default function NewProducts() {
   const [products, setProducts] = useState<Product[]>([]);

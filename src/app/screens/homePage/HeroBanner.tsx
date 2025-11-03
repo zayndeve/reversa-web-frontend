@@ -16,7 +16,7 @@ const HeroBanner = () => {
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.<br />
           Lorem Ipsum has been the industry's standard dummy text</p>
         <span>(+123) 123 321 345</span>
-        <button onClick={() => navigate('/orders')}>SHOP NOW</button>
+        <button onClick={() => navigate('/products')}>SHOP NOW</button>
       </div>
     </section>
   );

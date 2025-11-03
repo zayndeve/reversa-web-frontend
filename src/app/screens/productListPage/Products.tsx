@@ -172,6 +172,9 @@ const Products: React.FC<ProductsProps> = ({
                           price: product.productPrice,
                           image: product.productImages[0],
                           quantity: 1,
+                          size: product.productSize,
+                          tag: product.productTags,
+                          category: product.productCategory,
                         })
                       );
                     }}

@@ -1,0 +1,126 @@
+.contact-wrapper {
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: auto;
+
+  font-family: "Inter", sans-serif;
+}
+.contact-info {
+  flex: 1 1 45%;
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.contact-grid {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 100px;
+}
+/* Enhance info-block styling */
+.contact-info .info-block {
+  margin-top: 9px;
+  padding: 6px 20px;
+  border-radius: 10px;
+  background-color: #f0f3ff; /* Soft purple/blue highlight */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: background 0.3s ease;
+}
+
+.contact-info .info-block:hover {
+  background-color: #e6eaff; /* Lighter on hover */
+}
+
+/* Section headers (Address, Phone, Email) */
+.contact-info h4 {
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+/* Paragraphs inside info blocks */
+.contact-info .info-block p {
+  font-size: 14px;
+  color: #222;
+  margin: 2px 0;
+}
+
+/* Optional: Make icons colored */
+.contact-info svg {
+  color: #6c63ff; /* ReVerSo purple */
+}
+
+.contact-form {
+  flex: 1 1 50%;
+  background: #fff;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form h2 {
+  margin-bottom: 12px;
+  font-size: 22px;
+  color: #223843;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 14px 18px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: 0.2s ease;
+  background-color: #fff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #6c63ff;
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.2);
+  outline: none;
+}
+
+.send-btn {
+  background: #6c63ff;
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.send-btn:hover {
+  background: #574ed8;
+}
+
+.map-frame {
+  margin-top: 60px;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.map-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
