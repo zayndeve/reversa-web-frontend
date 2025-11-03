@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectNewProducts } from './selector';
+import { setNewProducts } from './slice';
 import { Product } from '../../../app/libs/types/product';
 import { ProductTag } from '../../../app/libs/enums/products.enum';
+import axios from 'axios';
 
 import '../../css/newProducts.css';
 import Swiper from '../../../app/components/common/Swiper';
@@ -26,6 +28,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
 );
 
 export default function NewProducts() {
+  const dispatch = useDispatch();
   const products = useSelector(selectNewProducts) as Product[];
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
@@ -33,8 +36,19 @@ export default function NewProducts() {
   const [navReady, setNavReady] = useState(false);
 
   useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        const response = await axios.get(`${apiUrl}/api/products`, { withCredentials: true });
+        dispatch(setNewProducts(response.data));
+      } catch (error) {
+        console.error('Failed to fetch products:', error);
+      }
+    };
+
+    fetchProducts();
     setNavReady(true); // Ensures refs are set before Swiper uses them
-  }, []);
+  }, [dispatch]);
 
   const safeProducts = products.length
     ? products
