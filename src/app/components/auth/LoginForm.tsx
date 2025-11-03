@@ -52,13 +52,12 @@ export default function LoginForm() {
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
 
-      // 🔥 Construct only the selected login field
-      const payload = {
-        [loginMethod]: formData[loginMethod],
-        memberPassword: formData.memberPassword,
-      };
+      // 🔥 Construct form data for the selected login field
+      const form = new FormData();
+      form.append(loginMethod, formData[loginMethod]);
+      form.append("memberPassword", formData.memberPassword);
 
-      const res = await axios.post(`${apiUrl}/api/member/login`, payload, {
+      const res = await axios.post(`${apiUrl}/api/member/login`, form, {
         withCredentials: true,
       });
 
