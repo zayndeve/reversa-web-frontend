@@ -18,6 +18,11 @@ import { serverApi } from "../../../app/libs/config";
 import { useAppSelector } from "../../../app/screens/hooks";
 import { selectCartItems } from "./cartSlice";
 
+// ✅ Import Material UI icons
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+
 
 export default function OtherNavbar() {
   const { authMember, setAuthMember } = useGlobal();
@@ -108,20 +113,21 @@ export default function OtherNavbar() {
             )}
 
             {/* Right Icons */}
-            <Box className="icon-group" display="flex" alignItems="center" gap={2}>
-  <div className="custom-badge" onClick={handleCartOpen}>
-  <div className="custom-badge cart-icon">
-  <i className="icon ion-ios-cart"></i>
-</div>
-
-    <span className="badge-count">{cartCount}</span> {/* ✅ Fixed */}
+        <Box className="icon-group" display="flex" alignItems="center" gap={2}>
+  <div className="custom-badge cart-icon" onClick={handleCartOpen}>
+    <ShoppingCartIcon sx={{ fontSize: 26, color: "#343434" }} />
+    <span className="badge-count">{cartCount}</span>
   </div>
-  <i className="icon ion-ios-search"></i>
+
+  <SearchIcon
+    sx={{ fontSize: 24, color: "#343434", cursor: "pointer" }}
+  />
 
   <IconButton onClick={handleMenuOpen}>
-    <i className="icon ion-ios-menu"></i>
+    <MenuIcon sx={{ fontSize: 26, color: "#343434" }} />
   </IconButton>
 </Box>
+
           </Stack>
         </Stack>
       </Container>

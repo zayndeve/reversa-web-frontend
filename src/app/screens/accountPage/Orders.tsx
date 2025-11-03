@@ -15,7 +15,7 @@ const Orders = () => {
       if (!authMember?._id) return;
       const orderService = new OrderService();
       const fetchedOrders = await orderService.getOrdersByMember(authMember._id);
-      setOrders(fetchedOrders);
+      setOrders(fetchedOrders || []);
     };
     fetchOrders();
   }, [authMember]);
@@ -30,10 +30,17 @@ const Orders = () => {
 
   const isCollapsed = (id: string) => collapsedOrders.includes(id);
 
+  const resolveImagePath = (img?: string) => {
+    if (!img) return "/images/no-image.png";
+    return img.startsWith("http")
+      ? img
+      : `${serverApi.replace(/\/$/, "")}/uploads/products/${img.replace(/^\/+/, "")}`;
+  };
+
   return (
     <div className="dashboard-container">
       <div className="order-header-row">
-       
+        <h2>Your Orders</h2>
       </div>
 
       {orders.length === 0 ? (
@@ -52,44 +59,86 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((order) => (
-                <React.Fragment key={order.Id}>
-                  <tr>
-                    <td>
-                      <img
-                        src={`${serverApi}/${order.PreviewItem?.Image}`}
-                        alt={order.PreviewItem?.Name}
-                        className="order-thumb"
-                      />
-                    </td>
-                    <td>{order.PreviewItem?.Name}</td>
-                    <td>
-                      <span className={`status-pill ${order.OrderStatus.toLowerCase()}`}>
-                        {order.OrderStatus}
-                      </span>
-                    </td>
-                    <td>{new Date(order.CreatedAt).toLocaleDateString()}</td>
-                    <td>${order.TotalAmount?.toFixed(2)}</td>
-                    <td>
-                      <button className="hide-btn" onClick={() => toggleCollapse(order.Id)}>
-                        {isCollapsed(order.Id) ? <Eye size={16} /> : <EyeOff size={16} />}
-                      </button>
-                    </td>
-                  </tr>
+              {orders.map((order) => {
+                const previewItem = order.OrderItems?.[0] || {};
+                const imageUrl = resolveImagePath(previewItem.ProductImage);
 
-                  {!isCollapsed(order.Id) && (
-                    <tr className="order-details-row">
-                      <td colSpan={6}>
-                        <div className="order-details-box">
-                          <p><strong>Payment:</strong> {order.PaymentMethod}</p>
-                          <p><strong>Shipping:</strong> {order.ShippingAddress?.Address}, {order.ShippingAddress?.City}, {order.ShippingAddress?.Country}</p>
-                          <p><strong>Order ID:</strong> {order.Id}</p>
-                        </div>
+                return (
+                  <React.Fragment key={order._id || order.Id}>
+                    <tr>
+                      <td>
+                        <img
+                          src={imageUrl}
+                          alt={previewItem.ProductName || "Product"}
+                          className="order-thumb"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/images/no-image.png";
+                          }}
+                        />
+                      </td>
+                      <td>{previewItem.ProductName || "Unnamed Product"}</td>
+                      <td>
+                        <span
+                          className={`status-pill ${(
+                            order.OrderStatus || "unknown"
+                          ).toLowerCase()}`}
+                        >
+                          {order.OrderStatus || "Unknown"}
+                        </span>
+                      </td>
+                      <td>
+                        {order.CreatedAt
+                          ? new Date(order.CreatedAt).toLocaleDateString()
+                          : "—"}
+                      </td>
+                      <td>${(order.TotalAmount || 0).toFixed(2)}</td>
+                      <td>
+                        <button
+                          className="hide-btn"
+                          onClick={() =>
+                            toggleCollapse(order._id || order.Id)
+                          }
+                        >
+                          {isCollapsed(order._id || order.Id) ? (
+                            <Eye size={16} />
+                          ) : (
+                            <EyeOff size={16} />
+                          )}
+                        </button>
                       </td>
                     </tr>
-                  )}
-                </React.Fragment>
-              ))}
+
+                    {!isCollapsed(order._id || order.Id) && (
+                      <tr className="order-details-row">
+                        <td colSpan={6}>
+                          <div className="order-details-box">
+                            <p>
+                              <strong>Payment:</strong>{" "}
+                              {order.PaymentMethod || "Unknown"}
+                            </p>
+                            <p>
+                              <strong>Shipping:</strong>{" "}
+                              {order.ShippingAddress
+                                ? `${order.ShippingAddress.Address || ""}, ${
+                                    order.ShippingAddress.City || ""
+                                  }, ${order.ShippingAddress.Country || ""}`
+                                : "N/A"}
+                            </p>
+                            <p>
+                              <strong>Order ID:</strong>{" "}
+                              {order._id || order.Id}
+                            </p>
+                            <p>
+                              <strong>Items:</strong>{" "}
+                              {order.OrderItems?.length || 0}
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
+                );
+              })}
             </tbody>
           </table>
         </div>

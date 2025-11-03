@@ -1,11 +1,11 @@
 import React, { useRef, useState, useEffect } from 'react';
-import axios from 'axios';
 import { Product } from '../../../app/libs/types/product';
 import { ProductTag } from '../../../app/libs/enums/products.enum';
 import { serverApi } from '../../../app/libs/config';
 import Swiper from '../../../app/components/common/Swiper';
 import '../../css/homePage.css';
 import { useNavigate } from 'react-router-dom/dist';
+import ProductService from '../../../app/service/ProductService';
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const navigate = useNavigate();
@@ -25,29 +25,40 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <div
       className="product-card"
-      onClick={() => navigate(`/products/${product._id}`)}
+      onClick={() => navigate(`/products/${product.id}`)}
       style={{ cursor: 'pointer' }}
     >
       <div className="product-img-wrapper">
         <img
-          src={product.ProductImages?.[0] ? `${serverApi}/${product.ProductImages[0]}` : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='}
-          alt={product.ProductName || 'Product'}
+          src={product.productImages?.[0] ? `${serverApi}/uploads/products/${product.productImages[0]}` : undefined}
+          alt={product.productName || 'Product'}
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.style.display = 'none';
+            const parent = target.parentElement;
+            if (parent && !parent.querySelector('.no-image-placeholder')) {
+              const placeholder = document.createElement('div');
+              placeholder.className = 'no-image-placeholder';
+              placeholder.innerHTML = '<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#ddd"/><text x="50%" y="50%" font-size="18" fill="#999" text-anchor="middle" dy=".3em">No Image</text></svg>';
+              parent.appendChild(placeholder);
+            }
+          }}
         />
-        {product.ProductTags?.includes(ProductTag.HOT) && (
+        {product.productTags?.includes(ProductTag.HOT) && (
           <span className="product-badge hot">HOT</span>
         )}
-        {product.ProductTags?.includes(ProductTag.BESTSELLER) && (
+        {product.productTags?.includes(ProductTag.BESTSELLER) && (
           <span className="product-badge bestseller">BESTSELLER</span>
         )}
       </div>
       <div className="product-info">
-        <h3 className="product-name">{product.ProductName || 'Unknown Product'}</h3>
+        <h3 className="product-name">{product.productName || 'Unknown Product'}</h3>
         <div className="product-price">
-          <span className="price-now">${product.ProductPrice || 0}</span>
-          <span className="price-old">${(product.ProductPrice || 0) + 15}</span>
+          <span className="price-now">${product.productPrice || 0}</span>
+          <span className="price-old">${(product.productPrice || 0) + 15}</span>
         </div>
         <div className="product-rating">
-          {renderStars(product.ProductRating ?? 4)}
+          {renderStars(product.productRating ?? 4)}
         </div>
       </div>
     </div>
@@ -68,14 +79,14 @@ export default function NewProducts() {
 
   const fetchNewArrivals = async () => {
     try {
-      const response = await axios.get(`${serverApi}/api/product/new-arrivals`, {
-        params: {
-          order: 'createdAt',
-          page: 1,
-          limit: 8,
-        },
-      });
-      setProducts(response.data);
+      const productService = new ProductService();
+      const params = {
+        order: 'createdAt',
+        page: 1,
+        limit: 8,
+      };
+      const products = await productService.getNewArrivals(params);
+      setProducts(products);
     } catch (error) {
       console.error('Error fetching new arrivals:', error);
     }
@@ -90,7 +101,7 @@ export default function NewProducts() {
         {navReady && products.length > 0 && (
           <Swiper
             slides={products.map((product) => (
-              <ProductCard key={product._id} product={product} />
+              <ProductCard key={product.id} product={product} />
             ))}
             slidesPerView={4}
             spaceBetween={30}

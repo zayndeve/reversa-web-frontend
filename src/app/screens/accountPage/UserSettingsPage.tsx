@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AccountSidebar from "./AccountSidebar";
 import UserInfoPage from "./UserInfoPage";
 import Orders from "./Orders";
@@ -27,6 +27,23 @@ const UserSettingsPage = () => {
     memberPhone: authMember?.memberPhone || "",
     memberAddress: authMember?.memberAddress || "",
   });
+
+  // Update form when authMember changes (e.g., after login or refresh)
+  useEffect(() => {
+    if (authMember) {
+      setForm({
+        memberNick: authMember.memberNick || "",
+        memberEmail: typeof authMember.memberEmail === "string" ? authMember.memberEmail : "",
+        memberPhone: authMember.memberPhone || "",
+        memberAddress: authMember.memberAddress || "",
+      });
+      setPreview(
+        authMember.memberImage
+          ? `${serverApi}/uploads/members/${authMember.memberImage}?v=${Date.now()}`
+          : "/icons/default-user.svg"
+      );
+    }
+  }, [authMember]);
 
   const [preview, setPreview] = useState<string>(
     authMember?.memberImage

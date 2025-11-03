@@ -114,67 +114,80 @@ const Products: React.FC<ProductsProps> = ({
     <>
       <div className={`antique-products-wrapper ${viewMode}`}>
         {products.map((product, index) => {
-          const isSelected = selectedProductIds.includes(product._id);
+          const isSelected = selectedProductIds.includes(product.id);
 
           return (
             <div
-              key={product._id || `product-${index}`}
+              key={product.id || `product-${index}`}
               className={`antique-product-card ${
                 viewMode === "list" ? "list-view" : "grid-view"
               } ${isSelected ? "selected" : ""}`}
               onClick={() => {
-                handleCardClick(product._id);
-                navigate(`/products/${product._id}`);
+                handleCardClick(product.id);
+                navigate(`/products/${product.id}`);
               }}
             >
               <div className="antique-product-image">
-                {product.ProductTags?.length && product.ProductTags.length > 0 && (
+                {product.productTags?.length && product.productTags.length > 0 && (
                   <div className="antique-product-tag">
-                    {product.ProductTags?.[0]?.replace("_", " ")}
+                    {product.productTags?.[0]?.replace("_", " ")}
                   </div>
                 )}
                 <img
-                  src={product.ProductImages?.[0] ? `${serverApi}/${product.ProductImages[0]}` : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4='}
-                  alt={product.ProductName || 'Product'}
+                  src={product.productImages?.[0] ? `${serverApi}/uploads/products/${product.productImages[0]}` : undefined}
+                  alt={product.productName || 'Product'}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement;
+                    if (parent && !parent.querySelector('.no-image-placeholder')) {
+                      const placeholder = document.createElement('div');
+                      placeholder.className = 'no-image-placeholder';
+                      placeholder.innerHTML = '<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#ddd"/><text x="50%" y="50%" font-size="18" fill="#999" text-anchor="middle" dy=".3em">No Image</text></svg>';
+                      parent.appendChild(placeholder);
+                    }
+                  }}
                 />
               </div>
 
               <div className="antique-product-info">
                 <div className="antique-product-price-title">
                   <div className="antique-price">
-                    ${(product.ProductPrice || 0).toFixed(2)}
+                    ${(product.productPrice || 0).toFixed(2)}
                   </div>
-                  <h4>{product.ProductName || 'Unknown Product'}</h4>
+                  <h4>{product.productName || 'Unknown Product'}</h4>
                   <div className="antique-stars">
-                    {"★".repeat(product.ProductRating || 4)}
-                    {"☆".repeat(5 - (product.ProductRating || 4))}
+                    {"★".repeat(product.productRating || 4)}
+                    {"☆".repeat(5 - (product.productRating || 4))}
                   </div>
                 </div>
 
                 {viewMode === "list" && (
                   <p className="antique-product-description">
-                    {product.ProductDesc || 'No description available'}
+                    {product.productDesc || 'No description available'}
                   </p>
                 )}
 
                 <div className="antique-product-actions">
                   <div className="antique-product-view-count">
-                    <Eye size={16} /> {product.ProductViews || 0} views
+                    <Eye size={16} /> {product.productViews || 0} views
                   </div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      animateToCart(e, product.ProductImages?.[0] ? `${serverApi}/${product.ProductImages[0]}` : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=');
+                      animateToCart(e, product.productImages?.[0] ? `${serverApi}/uploads/products/${product.productImages[0]}` : 'no-image');
                       dispatch(
                         addToCart({
-                          id: product._id,
-                          name: product.ProductName || 'Unknown Product',
-                          price: product.ProductPrice,
-                          image: product.ProductImages?.[0] ? `${serverApi}/${product.ProductImages[0]}` : 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZGRkIi8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5ObyBJbWFnZTwvdGV4dD48L3N2Zz4=',
+                          id: product.id,
+                          name: product.productName || "Unknown Product",
+                          price: product.productPrice,
+                          image: Array.isArray(product.productImages)
+                            ? product.productImages[0]
+                            : product.productImages || "no-image",
                           quantity: 1,
-                          size: product.ProductSize,
-                          tag: product.ProductTags,
-                          category: product.ProductCategory,
+                          size: product.productSize,
+                          tag: product.productTags,
+                          category: product.productCategory,
                         })
                       );
                     }}

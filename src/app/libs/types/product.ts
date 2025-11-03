@@ -3,24 +3,27 @@ import {
   ProductSize,
   ProductStatus,
   ProductTag,
+  ProductGender,
 } from "../enums/products.enum";
 
 // Main product model (from backend)
 export interface Product {
-  _id: string;
-  ProductStatus: ProductStatus;
-  ProductCategory: ProductCategory;
-  ProductName: string;
-  ProductPrice: number;
-  ProductLeftCount: number;
-  ProductSize?: ProductSize;
-  ProductDesc?: string;
-  ProductImages: string[];
-  ProductViews: number;
-  ProductVolume?: number;
-  ProductTags?: ProductTag[];
-  ProductRating?: number;
-  UpdatedAt: Date;
+  id: string;
+  productStatus: ProductStatus;
+  productCategory: ProductCategory;
+  productName: string;
+  productGender: ProductGender;
+  productPrice: number;
+  productLeftCount: number;
+  productSize?: ProductSize;
+  productDesc?: string;
+  productImages: string[];
+  productViews: number;
+  productVolume?: number;
+  productTags?: ProductTag[];
+  productRating?: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
 export interface ProductInquiry {
   order: string;

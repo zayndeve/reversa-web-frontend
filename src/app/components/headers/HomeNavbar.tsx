@@ -18,6 +18,11 @@ import { Logout } from "@mui/icons-material";
 import { useAppSelector } from "../../../app/screens/hooks";
 import { selectCartItems } from "./cartSlice";
 
+// ✅ Import Material UI icons
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import SearchIcon from "@mui/icons-material/Search";
+import MenuIcon from "@mui/icons-material/Menu";
+
 export function HomeNavbar() {
   const { authMember, setAuthMember } = useGlobal();
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -30,8 +35,7 @@ export function HomeNavbar() {
   const handleMenuOpen = (e: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(e.currentTarget);
   };
-  const cartItems = useAppSelector(selectCartItems);
- const cartCount = cartItems.reduce((sum: number, item:any) => sum + item.quantity, 0);
+
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
@@ -43,6 +47,12 @@ export function HomeNavbar() {
     handleMenuClose();
   };
 
+  const cartItems = useAppSelector(selectCartItems);
+  const cartCount = cartItems.reduce(
+    (sum: number, item: any) => sum + item.quantity,
+    0
+  );
+
   return (
     <div className="home-navbar">
       <Container sx={{ mt: "30px", height: "80px" }}>
@@ -52,7 +62,7 @@ export function HomeNavbar() {
           alignItems="center"
           sx={{ height: "100%" }}
         >
-          {/* Logo */}
+          {/* === LOGO === */}
           <Box>
             <NavLink to="/">
               <img
@@ -63,35 +73,71 @@ export function HomeNavbar() {
             </NavLink>
           </Box>
 
-          {/* Navigation Menu */}
+          {/* === NAVIGATION MENU === */}
           <Stack direction="row" spacing={4} alignItems="center">
-            <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+            <NavLink
+              to="/"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               Home
             </NavLink>
-            <NavLink to="/products" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+
+            <NavLink
+              to="/products"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               Shop
             </NavLink>
 
-            {/* Cart Drawer */}
+            {/* === CART DRAWER === */}
             <MiniCartDrawer isOpen={isCartOpen} onClose={handleCartClose} />
 
-            {/* Direct nav links when authenticated */}
+            {/* === CONDITIONAL LINKS === */}
             {authMember && (
               <>
-                <NavLink to="/order" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                <NavLink
+                  to="/order"
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                >
                   Orders
                 </NavLink>
-                <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+
+                <NavLink
+                  to="/account"
+                  className={({ isActive }) =>
+                    isActive ? "nav-link active" : "nav-link"
+                  }
+                >
                   My Page
                 </NavLink>
               </>
             )}
-             <NavLink to="/about" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+
+            <NavLink
+              to="/about"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               About Us
             </NavLink>
-            <NavLink to="/contact" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+
+            <NavLink
+              to="/contact"
+              className={({ isActive }) =>
+                isActive ? "nav-link active" : "nav-link"
+              }
+            >
               Contact Us
             </NavLink>
+
+            {/* === LOGIN BUTTON === */}
             {!authMember && (
               <Button
                 variant="contained"
@@ -102,23 +148,27 @@ export function HomeNavbar() {
               </Button>
             )}
 
-            {/* Right Icons */}
+            {/* === RIGHT ICON GROUP === */}
             <Box className="icon-group" display="flex" alignItems="center" gap={2}>
-  <div className="custom-badge" onClick={handleCartOpen}>
-    <i className="icon ion-ios-cart"></i>
-    <span className="badge-count">{cartCount}</span> {/* ✅ Fixed */}
+  <div className="custom-badge cart-icon" onClick={handleCartOpen}>
+    <ShoppingCartIcon sx={{ fontSize: 26, color: "#343434" }} />
+    <span className="badge-count">{cartCount}</span>
   </div>
-  <i className="icon ion-ios-search"></i>
+
+  <SearchIcon
+    sx={{ fontSize: 24, color: "#343434", cursor: "pointer" }}
+  />
 
   <IconButton onClick={handleMenuOpen}>
-    <i className="icon ion-ios-menu"></i>
+    <MenuIcon sx={{ fontSize: 26, color: "#343434" }} />
   </IconButton>
 </Box>
+
           </Stack>
         </Stack>
       </Container>
 
-      {/* Hamburger Dropdown Menu */}
+      {/* === DROPDOWN MENU === */}
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
@@ -132,32 +182,48 @@ export function HomeNavbar() {
               src={`${serverApi}/uploads/members/${authMember.memberImage}`}
               sx={{ width: 56, height: 56, margin: "0 auto" }}
             />
-            <Box mt={1} fontWeight="bold">{authMember.memberNick}</Box>
+            <Box mt={1} fontWeight="bold">
+              {authMember.memberNick}
+            </Box>
           </Box>
         )}
 
-{authMember
-    ? [
-        <MenuItem key="account" onClick={() => { navigate("/account"); handleMenuClose(); }}>
-          My Page
-        </MenuItem>,
-        <MenuItem key="orders" onClick={() => { navigate("/orders"); handleMenuClose(); }}>
-          Orders
-        </MenuItem>,
-        <MenuItem key="logout" onClick={handleLogout}>
-          <ListItemIcon>
-            <Logout fontSize="small" />
-          </ListItemIcon>
-          Logout
-        </MenuItem>
-      ]
-    : [
-        <MenuItem key="login" onClick={() => { navigate("/login"); handleMenuClose(); }}>
-          Login
-        </MenuItem>
-      ]
-  }
-</Menu>
+        {authMember ? (
+          <>
+            <MenuItem
+              onClick={() => {
+                navigate("/account");
+                handleMenuClose();
+              }}
+            >
+              My Page
+            </MenuItem>
+            <MenuItem
+              onClick={() => {
+                navigate("/orders");
+                handleMenuClose();
+              }}
+            >
+              Orders
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
+          </>
+        ) : (
+          <MenuItem
+            onClick={() => {
+              navigate("/login");
+              handleMenuClose();
+            }}
+          >
+            Login
+          </MenuItem>
+        )}
+      </Menu>
     </div>
   );
 }

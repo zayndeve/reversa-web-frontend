@@ -10,10 +10,45 @@ import theme from "./app/MaterialTheme";
 import { BrowserRouter as Router } from "react-router-dom";
 import { GlobalContext } from "./app/hooks/useGlobal";
 import { Member } from "./app/libs/types/member";
+import Cookies from "universal-cookie";
 
 const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [authMember, setAuthMember] = React.useState<Member | null>(null);
+  const cookies = React.useMemo(() => new Cookies(), []); // Stable cookies instance
+  const [authMember, setAuthMemberState] = React.useState<Member | null>(null);
   const [orderBuilder, setOrderBuilder] = React.useState<Date>(new Date());
+  const [isLoading, setIsLoading] = React.useState(true);
+
+  // Load initial state from localStorage
+  React.useEffect(() => {
+    const token = cookies.get("accessToken");
+    if (!token) {
+      localStorage.removeItem("memberData");
+      setAuthMemberState(null);
+    } else {
+      const stored = localStorage.getItem("memberData");
+      if (stored) {
+        try {
+          setAuthMemberState(JSON.parse(stored));
+        } catch (error) {
+          console.error("Error parsing stored member data:", error);
+          localStorage.removeItem("memberData");
+        }
+      }
+    }
+    setIsLoading(false);
+  }, [cookies]); // Now cookies is stable
+
+  // Enhanced setAuthMember that persists to localStorage
+  const setAuthMember = React.useCallback((member: Member | null) => {
+    setAuthMemberState(member);
+    if (member) {
+      localStorage.setItem("memberData", JSON.stringify(member));
+    } else {
+      localStorage.removeItem("memberData");
+    }
+  }, []);
+
+  if (isLoading) return null; // Wait for localStorage to load
 
   return (
     <GlobalContext.Provider value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}>

@@ -93,8 +93,8 @@ const OrdersPage = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item: any) => (
-                <tr key={item.id}>
+              {cartItems.map((item: any, index: number) => (
+                <tr key={`${item.id}-${index}`}>
                   <td>
                     <DeleteIcon
                       className="delete-icon"
@@ -103,13 +103,20 @@ const OrdersPage = () => {
                   </td>
                   <td>
                     <img
-                      src={`${serverApi}/${item.image}`}
+                      src={
+                        item.image?.startsWith("http")
+                          ? item.image
+                          : `${serverApi}/uploads/products/${item.image}`
+                      }
                       alt={item.name}
                       className="product-thumb"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = "/images/no-image.png";
+                      }}
                     />
                   </td>
                   <td>{item.name}</td>
-                  <td>${item.price.toFixed(2)}</td>
+                  <td>${(item.price || 0).toFixed(2)}</td>
                   <td>
                     <div className="quantity-control">
                       <button type="button" onClick={() => handleDecrease(item.id)}>

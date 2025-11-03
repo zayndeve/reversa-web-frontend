@@ -169,7 +169,17 @@ const OrderConfirmation = () => {
 
             {(paymentSuccess ? cartSnapshot : cartItems).map((item: any) => (
               <div className="item-card" key={item.id}>
-                <img src={`${serverApi}/${item.image}`} alt={item.name} />
+                <img 
+                  src={
+                    item.image?.startsWith("http")
+                      ? item.image
+                      : `${serverApi}/uploads/products/${item.image}`
+                  } 
+                  alt={item.name} 
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/images/no-image.png";
+                  }}
+                />
                 <div className="item-info">
                   <h4>{item.name}</h4>
                   <p>Size: {item.size || "-"}</p>

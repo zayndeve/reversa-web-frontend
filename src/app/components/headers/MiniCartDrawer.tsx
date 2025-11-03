@@ -18,10 +18,15 @@ interface MiniCartDrawerProps {
   onClose: () => void;
 }
 
-export default function MiniCartDrawer({
-  isOpen,
-  onClose,
-}: MiniCartDrawerProps) {
+// ✅ Universal safe resolver for images
+const resolveImagePath = (img?: string) => {
+  if (!img) return "/images/no-image.png";
+  return img.startsWith("http")
+    ? img
+    : `${serverApi.replace(/\/$/, "")}/uploads/products/${img.replace(/^\/+/, "")}`;
+};
+
+export default function MiniCartDrawer({ isOpen, onClose }: MiniCartDrawerProps) {
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
   const subtotal = useAppSelector(selectCartTotal).toFixed(2);
@@ -32,6 +37,7 @@ export default function MiniCartDrawer({
       {isOpen && <div className="mini-cart-backdrop" onClick={onClose}></div>}
 
       <Box className={`mini-cart-drawer ${isOpen ? "open" : ""}`}>
+        {/* === HEADER === */}
         <Box className="drawer-header">
           <Typography variant="h6">Shopping Cart</Typography>
           <IconButton className="remove-btn" onClick={onClose}>
@@ -39,23 +45,29 @@ export default function MiniCartDrawer({
           </IconButton>
         </Box>
 
+        {/* === CONTENT === */}
         <Box className="drawer-content">
           {cartItems.length === 0 ? (
             <Typography variant="body2" sx={{ textAlign: "center", mt: 4 }}>
               Your cart is empty.
             </Typography>
           ) : (
-            cartItems.map((item: CartItem) => (
-              <Box key={item.id} className="cart-item">
+            cartItems.map((item: CartItem, index: number) => (
+              <Box key={`${item.id}-${index}`} className="cart-item">
                 <img
-                  src={`${serverApi}/${item.image}`}
-                  alt={item.name}
+                  src={resolveImagePath(item.image)}
+                  alt={item.name || "Product"}
                   className="item-img"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = "/images/no-image.png";
+                  }}
                 />
                 <Box className="item-info">
-                  <Typography variant="body1">{item.name}</Typography>
+                  <Typography variant="body1">
+                    {item.name || "Unnamed Product"}
+                  </Typography>
                   <Typography variant="body2">
-                    {item.quantity} x ${(item.price || 0).toFixed(2)}
+                    {item.quantity} × ${(item.price || 0).toFixed(2)}
                   </Typography>
                 </Box>
                 <IconButton
@@ -68,6 +80,7 @@ export default function MiniCartDrawer({
             ))
           )}
 
+          {/* === FOOTER === */}
           {cartItems.length > 0 && (
             <>
               <Box className="subtotal-box">
@@ -85,7 +98,7 @@ export default function MiniCartDrawer({
                   navigate("/order");
                 }}
               >
-                MINI CART (Orders)
+                VIEW CART / CHECKOUT
               </Button>
 
               <Button
