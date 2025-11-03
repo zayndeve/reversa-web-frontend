@@ -78,7 +78,7 @@ export function HomeNavbar() {
             {/* Direct nav links when authenticated */}
             {authMember && (
               <>
-                <NavLink to="/orders" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                <NavLink to="/order" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                   Orders
                 </NavLink>
                 <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>

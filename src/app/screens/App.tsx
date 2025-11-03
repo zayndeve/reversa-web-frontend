@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./homePage";
 import ProductListPage from "./productListPage";
-import CartPage from "./cartPage";
 import CheckoutPage from "./checkoutPage";
 import AccountPage from "./accountPage";
 import SearchPage from "./searchPage";
@@ -11,21 +10,23 @@ import OtherNavbar from "../components/headers/OtherNavbar";
 import Footer from "../components/footer";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SingupPage";
+import ForgotPasswordForm from "../components/auth/ForgotPasswordForm";
+import ResetPasswordPage from "../components/auth/ResetPasswordForm";
+import { useGlobal } from "../hooks/useGlobal";
 
 import "../css/basket.css";
 import "../css/navbar.css";
 import "../css/footer.css";
 import "../css/app.css";
-import ForgotPasswordForm from "../components/auth/ForgotPasswordForm";
-import ResetPasswordPage from "../components/auth/ResetPasswordForm";
+import OrderPage from "./orderPage/OrderPage";
 
 function App() {
   const location = useLocation();
+  const { authMember } = useGlobal();
 
-  // Check if we're on an auth page
+
   const hideNavAndFooter = [
     "/login",
-    "/member/login",
     "/member/signup",
     "/forgot-password",
     "/reset-password/:token",
@@ -33,32 +34,30 @@ function App() {
 
   return (
     <>
-      {/* Navbar: only show if NOT on login/signup */}
-      {!hideNavAndFooter &&
-        (location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />)}
+      {/* ✅ Navbar logic — based on authMember */}
+      {!hideNavAndFooter && (authMember ? <OtherNavbar /> : <HomeNavbar />)}
 
-      {/* Routes */}
       <Routes>
         {/* Public pages */}
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/cart" element={<CartPage />} />
+        <Route path="/products/:id" element={<ProductListPage />} />
+        <Route path="/order" element={<OrderPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/account" element={<AccountPage />} />
         <Route path="/search" element={<SearchPage />} />
 
-        {/* Authentication pages */}
+        {/* Auth pages */}
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/member/login" element={<LoginPage />} />
         <Route path="/member/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />
 
-        {/* 404 */}
+        {/* Not found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
-      {/* Footer: only show if NOT on login/signup */}
+      {/* ✅ Footer logic */}
       {!hideNavAndFooter && <Footer />}
     </>
   );

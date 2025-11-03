@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography, Button, IconButton } from "@mui/material";
 import ClearIcon from "@mui/icons-material/Clear";
-
 import {
   selectCartItems,
   selectCartTotal,
@@ -12,6 +11,7 @@ import { serverApi } from "../../../app/libs/config";
 import { useAppDispatch, useAppSelector } from "../../../app/screens/hooks";
 import { CartItem } from "./cartSlice"; // ✅ import your own type
 import "../../css/basket.css";
+import { useNavigate } from "react-router-dom";
 
 interface MiniCartDrawerProps {
   isOpen: boolean;
@@ -25,6 +25,7 @@ export default function MiniCartDrawer({
   const dispatch = useAppDispatch();
   const cartItems = useAppSelector(selectCartItems);
   const subtotal = useAppSelector(selectCartTotal).toFixed(2);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -81,6 +82,7 @@ export default function MiniCartDrawer({
                 onClick={() => {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                   onClose();
+                  navigate("/order");
                 }}
               >
                 MINI CART (Orders)

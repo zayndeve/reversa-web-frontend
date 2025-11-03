@@ -82,7 +82,7 @@ export default function OtherNavbar() {
             {/* Orders + My Page visible always when logged in */}
             {authMember && (
               <>
-                <NavLink to="/orders" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+                <NavLink to="/order" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
                   Orders
                 </NavLink>
                 <NavLink to="/account" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
@@ -149,7 +149,7 @@ export default function OtherNavbar() {
         <MenuItem key="account" onClick={() => { navigate("/account"); handleMenuClose(); }}>
           My Page
         </MenuItem>,
-        <MenuItem key="orders" onClick={() => { navigate("/orders"); handleMenuClose(); }}>
+        <MenuItem key="orders" onClick={() => { navigate("/order"); handleMenuClose(); }}>
           Orders
         </MenuItem>,
         <MenuItem key="logout" onClick={handleLogout}>

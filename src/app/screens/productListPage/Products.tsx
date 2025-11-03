@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "../../css/productsListPage.css";
 import { Eye, ShoppingCart } from "lucide-react";
 import Pagination from "../../../app/libs/data/Pagination";
@@ -6,7 +6,8 @@ import { Product, ProductInquiry } from "../../../app/libs/types/product";
 import ProductService from "../../../app/service/ProductService";
 import { serverApi } from "../../../app/libs/config";
 import { useAppDispatch } from "../hooks";
-import { addToCart } from "../../../app/components/headers/cartSlice";
+import { addToCart } from "../../../app/components/headers/cartSlice";import { useNavigate } from "react-router-dom";
+
 
 type ViewMode = "grid" | "list";
 
@@ -71,7 +72,7 @@ const Products: React.FC<ProductsProps> = ({
     };
 
     fetchData();
-  }, [currentPage, sortOrder, filters]);
+  }, [currentPage, sortOrder, filters,onMetadataUpdate]);
 
   const handleCardClick = (id: string) => {
     setSelectedProductIds((prev) =>
@@ -80,7 +81,7 @@ const Products: React.FC<ProductsProps> = ({
   };
 
   const totalPages = Math.ceil(total / productsPerPage);
-
+  const navigate = useNavigate();
   const animateToCart = (e: React.MouseEvent, imageSrc: string) => {
     const cartIcon = document.querySelector(".cart-icon");
     if (!cartIcon) return;
@@ -121,7 +122,10 @@ const Products: React.FC<ProductsProps> = ({
               className={`antique-product-card ${
                 viewMode === "list" ? "list-view" : "grid-view"
               } ${isSelected ? "selected" : ""}`}
-              onClick={() => handleCardClick(product._id)}
+              onClick={() => {
+                handleCardClick(product._id);
+                navigate(`/products/${product._id}`);
+              }}
             >
               <div className="antique-product-image">
                 {product.productTags?.length && product.productTags.length > 0 && (

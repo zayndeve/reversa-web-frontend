@@ -1,78 +1,144 @@
 .antique-product-detail-wrapper {
   display: flex;
-  gap: 40px;
-  padding: 50px;
-  background-color: #fdf8f3;
+  justify-content: center;
+  padding: 100px 20px 60px;
+  background: #f5f5f5;
+  min-height: 90vh;
+}
+
+.antique-product-detail-container {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: row;
+  gap: 48px;
+  max-width: 1100px;
+  width: 100%;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+.antique-product-detail-image {
+  flex: 1;
+  max-width: 480px;
+  position: relative;
 }
 
 .antique-product-detail-image img {
-  width: 420px;
-  height: auto;
+  width: 100%;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ddd;
+}
+
+.antique-product-tag-badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  background-color: #d64045;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
 .antique-product-detail-info {
-  max-width: 600px;
-  font-family: "Segoe UI", sans-serif;
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
 }
 
 .antique-product-title {
-  font-size: 32px;
-  margin-bottom: 16px;
+  font-size: 26px;
+  font-weight: 700;
   color: #223843;
+  margin-bottom: 10px;
 }
 
 .antique-product-description {
-  font-size: 16px;
-  line-height: 1.6;
-  margin-bottom: 24px;
+  font-size: 15px;
   color: #444;
+  margin-bottom: 20px;
+  line-height: 1.6;
 }
 
 .antique-price {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
   color: #d64045;
+  margin-bottom: 10px;
 }
-
-.original-price {
-  margin-left: 12px;
+.antique-price .original-price {
   text-decoration: line-through;
+  font-weight: 400;
   color: #999;
-  font-weight: normal;
+  margin-left: 12px;
+  font-size: 16px;
 }
 
 .antique-detail-bottom {
-  margin-top: 30px;
+  margin-top: 20px;
   display: flex;
+  gap: 24px;
   align-items: center;
-  justify-content: space-between;
 }
 
 .antique-views {
   font-size: 14px;
-  color: #777;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .antique-cart-button {
-  background: #223843;
+  background-color: #223843;
   color: white;
   border: none;
-  padding: 10px 16px;
+  padding: 10px 18px;
+  border-radius: 30px;
   font-size: 14px;
-  border-radius: 8px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  gap: 10px;
+  transition: background-color 0.3s ease;
+}
+.antique-cart-button:hover {
+  background-color: #1b2f3b;
+}
+.antique-views {
+  font-size: 14px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.antique-loader-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.75);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.antique-cart-button:hover {
-  background: #1a2c39;
+.antique-loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #223843;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: antique-spin 0.9s linear infinite;
+}
+
+@keyframes antique-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
