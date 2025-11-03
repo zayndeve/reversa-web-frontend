@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 
 import { createSlice } from "@reduxjs/toolkit";
 import homePageReducer from "./homePage/slice";
+import cartReducer from "../components/headers/cartSlice";
 
 const dummySlice = createSlice({
   name: "dummy",
@@ -13,6 +14,7 @@ export const store = configureStore({
   reducer: {
     dummy: dummySlice.reducer,
     homePage: homePageReducer,
+    cart: cartReducer,
   },
 });
 

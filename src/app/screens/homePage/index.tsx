@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "../../components/headers/Banner";
+import Banner from "./Banner";
 import { HomeNavbar } from "../../components/headers/HomeNavbar";
 import Statistics from "./Statistics";
 import NewProducts from "./NewProducts";

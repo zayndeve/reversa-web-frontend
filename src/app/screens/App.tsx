@@ -1,7 +1,6 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./homePage";
 import ProductListPage from "./productListPage";
-import ProductDetailPage from "./productDetailPage";
 import CartPage from "./cartPage";
 import CheckoutPage from "./checkoutPage";
 import AccountPage from "./accountPage";
@@ -43,7 +42,6 @@ function App() {
         {/* Public pages */}
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductListPage />} />
-        <Route path="/products/:id" element={<ProductDetailPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/account" element={<AccountPage />} />

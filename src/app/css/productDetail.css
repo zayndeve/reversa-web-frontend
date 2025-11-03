@@ -1,0 +1,78 @@
+.antique-product-detail-wrapper {
+  display: flex;
+  gap: 40px;
+  padding: 50px;
+  background-color: #fdf8f3;
+}
+
+.antique-product-detail-image img {
+  width: 420px;
+  height: auto;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.antique-product-detail-info {
+  max-width: 600px;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.antique-product-title {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: #223843;
+}
+
+.antique-product-description {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 24px;
+  color: #444;
+}
+
+.antique-price {
+  font-size: 22px;
+  font-weight: bold;
+  color: #d64045;
+}
+
+.original-price {
+  margin-left: 12px;
+  text-decoration: line-through;
+  color: #999;
+  font-weight: normal;
+}
+
+.antique-detail-bottom {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.antique-views {
+  font-size: 14px;
+  color: #777;
+}
+
+.antique-cart-button {
+  background: #223843;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.antique-cart-button:hover {
+  background: #1a2c39;
+}

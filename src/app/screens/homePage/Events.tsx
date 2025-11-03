@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import Swiper from "../../../app/components/common/Swiper"; 
-import "../../css/events.css";
+import "../../css/homePage.css";
 import { plans } from "../../../app/libs/data/plans";
 
 export default function Events() {

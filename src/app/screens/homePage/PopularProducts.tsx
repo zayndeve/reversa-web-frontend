@@ -1,104 +1,89 @@
 import React, { useRef, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { selectNewProducts } from './selector';
+import axios from 'axios';
 import { Product } from '../../libs/types/product';
 import { ProductTag } from '../../libs/enums/products.enum';
-
-import '../../css/newProducts.css';
+import { serverApi } from '../../libs/config';
 import Swiper from '../../components/common/Swiper';
 import { Eye } from 'lucide-react';
+import '../../css/homePage.css';
 
-
+// ✅ Dynamic stars rendering logic
+const renderStars = (rating: number) => {
+  const fullStars = Math.floor(rating);
+  const halfStar = rating % 1 >= 0.5;
+  return (
+    <>
+      {'★'.repeat(fullStars)}
+      {halfStar && '☆'}
+      {'☆'.repeat(5 - fullStars - (halfStar ? 1 : 0))}
+    </>
+  );
+};
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
   <div className="product-card">
     <div className="product-img-wrapper">
-      <img src={product.productImages[0]} alt={product.productName} />
-      {product.productTags?.includes(ProductTag.HOT) && <span className="product-badge hot">HOT</span>}
-      {product.productTags?.includes(ProductTag.BESTSELLER) && <span className="product-badge bestseller">BESTSELLER</span>}
+      <img src={`${serverApi}/${product.productImages[0]}`} alt={product.productName} />
+      {product.productTags?.includes(ProductTag.HOT) && (
+        <span className="product-badge hot">HOT</span>
+      )}
+      {product.productTags?.includes(ProductTag.BESTSELLER) && (
+        <span className="product-badge bestseller">BESTSELLER</span>
+      )}
     </div>
     <div className="product-info">
       <h3 className="product-name">{product.productName}</h3>
-
       <div className="product-price">
         <span className="price-now">${product.productPrice}</span>
         <span className="price-old">${product.productPrice + 15}</span>
       </div>
       <div className="product-views">
-  <Eye size={16} style={{ marginRight: '5px' }} />
-  {product.productViews ?? 123} Views
-</div>
-      <div className="product-rating">★★★★☆</div>
+        <Eye size={16} style={{ marginRight: '5px' }} />
+        {product.productViews ?? 0} Views
+      </div>
+      <div className="product-rating">{renderStars(product.productRating ?? 4)}</div>
     </div>
   </div>
 );
+
 export default function PopularProducts() {
-  const products = useSelector(selectNewProducts) as Product[];
+  const [products, setProducts] = useState<Product[]>([]);
   const prevRef = useRef<HTMLDivElement>(null);
   const nextRef = useRef<HTMLDivElement>(null);
 
   const [navReady, setNavReady] = useState(false);
 
   useEffect(() => {
-    setNavReady(true); // Ensures refs are set before Swiper uses them
+    setNavReady(true);
+    fetchPopularProducts();
   }, []);
 
-  const safeProducts = products.length
-    ? products
-    : [
-        {
-          _id: '1',
-          productName: 'Adipisci voluptas',
-          productPrice: 75.91,
-          productImages: ['/img/sample1.jpg'],
-          productTags: [ProductTag.HOT],
+  // ✅ Fetching from your backend
+  const fetchPopularProducts = async () => {
+    try {
+      const response = await axios.get(`${serverApi}/api/product/popular-products`, {
+        params: {
+          order: 'productViews',
+          page: 1,
+          limit: 8,
         },
-        {
-          _id: '2',
-          productName: 'Possimus beatae',
-          productPrice: 65.0,
-          productImages: ['/img/sample2.jpg'],
-          productTags: [ProductTag.BESTSELLER],
-        },
-        {
-          _id: '2',
-          productName: 'Possimus beatae',
-          productPrice: 65.0,
-          productImages: ['/img/sample2.jpg'],
-          productTags: [ProductTag.BESTSELLER],
-        },
-        {
-          _id: '2',
-          productName: 'Possimus beatae',
-          productPrice: 65.0,
-          productImages: ['/img/sample2.jpg'],
-          productTags: [ProductTag.BESTSELLER],
-        },
-        {
-          _id: '2',
-          productName: 'Possimus beatae',
-          productPrice: 65.0,
-          productImages: ['/img/sample2.jpg'],
-          productTags: [ProductTag.BESTSELLER],
-        }, {
-          _id: '2',
-          productName: 'Possimus beatae',
-          productPrice: 65.0,
-          productImages: ['/img/sample2.jpg'],
-          productTags: [ProductTag.BESTSELLER],
-        },
-      ] as Product[];
+        withCredentials: true,
+      });
+      setProducts(response.data);
+    } catch (error) {
+      console.error('Error fetching popular products:', error);
+    }
+  };
 
   return (
     <section className="new-products-section">
       <div className="container">
         <div className="new-products-header">
           <h2>Popular Products</h2>
-          
         </div>
-        {navReady && (
+        {navReady && products.length > 0 && (
           <Swiper
-            slides={safeProducts.map((product) => (
+            slides={products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
             slidesPerView={4}
