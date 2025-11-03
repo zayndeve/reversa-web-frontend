@@ -26,6 +26,7 @@ function App() {
   // Check if we're on an auth page
   const hideNavAndFooter = [
     "/login",
+    "/member/login",
     "/member/signup",
     "/forgot-password",
     "/reset-password/:token",
@@ -50,6 +51,7 @@ function App() {
 
         {/* Authentication pages */}
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/member/login" element={<LoginPage />} />
         <Route path="/member/signup" element={<SignupPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordForm />} />
         <Route path="/reset-password/:token" element={<ResetPasswordPage />} />

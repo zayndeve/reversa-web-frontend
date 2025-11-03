@@ -8,18 +8,33 @@ import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "./app/MaterialTheme";
 import { BrowserRouter as Router } from "react-router-dom";
+import { GlobalContext } from "./app/hooks/useGlobal";
+import { Member } from "./app/libs/types/member";
+
+const GlobalProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [authMember, setAuthMember] = React.useState<Member | null>(null);
+  const [orderBuilder, setOrderBuilder] = React.useState<Date>(new Date());
+
+  return (
+    <GlobalContext.Provider value={{ authMember, setAuthMember, orderBuilder, setOrderBuilder }}>
+      {children}
+    </GlobalContext.Provider>
+  );
+};
 
 const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <App />
-        </Router>
-      </ThemeProvider>
-    </Provider>
+    <GlobalProvider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <App />
+          </Router>
+        </ThemeProvider>
+      </Provider>
+    </GlobalProvider>
   </React.StrictMode>
 );
 
