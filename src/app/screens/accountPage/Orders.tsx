@@ -53,37 +53,37 @@ const Orders = () => {
             </thead>
             <tbody>
               {orders.map((order) => (
-                <React.Fragment key={order._id}>
+                <React.Fragment key={order.Id}>
                   <tr>
                     <td>
                       <img
-                        src={`${serverApi}/${order.previewItem?.image}`}
-                        alt={order.previewItem?.name}
+                        src={`${serverApi}/${order.PreviewItem?.Image}`}
+                        alt={order.PreviewItem?.Name}
                         className="order-thumb"
                       />
                     </td>
-                    <td>{order.previewItem?.name}</td>
+                    <td>{order.PreviewItem?.Name}</td>
                     <td>
-                      <span className={`status-pill ${order.orderStatus.toLowerCase()}`}>
-                        {order.orderStatus}
+                      <span className={`status-pill ${order.OrderStatus.toLowerCase()}`}>
+                        {order.OrderStatus}
                       </span>
                     </td>
-                    <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                    <td>${order.totalAmount?.toFixed(2)}</td>
+                    <td>{new Date(order.CreatedAt).toLocaleDateString()}</td>
+                    <td>${order.TotalAmount?.toFixed(2)}</td>
                     <td>
-                      <button className="hide-btn" onClick={() => toggleCollapse(order._id)}>
-                        {isCollapsed(order._id) ? <Eye size={16} /> : <EyeOff size={16} />}
+                      <button className="hide-btn" onClick={() => toggleCollapse(order.Id)}>
+                        {isCollapsed(order.Id) ? <Eye size={16} /> : <EyeOff size={16} />}
                       </button>
                     </td>
                   </tr>
 
-                  {!isCollapsed(order._id) && (
+                  {!isCollapsed(order.Id) && (
                     <tr className="order-details-row">
                       <td colSpan={6}>
                         <div className="order-details-box">
-                          <p><strong>Payment:</strong> {order.paymentMethod}</p>
-                          <p><strong>Shipping:</strong> {order.shippingAddress?.address}, {order.shippingAddress?.city}, {order.shippingAddress?.country}</p>
-                          <p><strong>Order ID:</strong> {order._id}</p>
+                          <p><strong>Payment:</strong> {order.PaymentMethod}</p>
+                          <p><strong>Shipping:</strong> {order.ShippingAddress?.Address}, {order.ShippingAddress?.City}, {order.ShippingAddress?.Country}</p>
+                          <p><strong>Order ID:</strong> {order.Id}</p>
                         </div>
                       </td>
                     </tr>

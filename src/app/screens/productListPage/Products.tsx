@@ -128,53 +128,53 @@ const Products: React.FC<ProductsProps> = ({
               }}
             >
               <div className="antique-product-image">
-                {product.productTags?.length && product.productTags.length > 0 && (
+                {product.ProductTags?.length && product.ProductTags.length > 0 && (
                   <div className="antique-product-tag">
-                    {product.productTags?.[0]?.replace("_", " ")}
+                    {product.ProductTags?.[0]?.replace("_", " ")}
                   </div>
                 )}
                 <img
-                  src={`${serverApi}/${product.productImages[0]}`}
-                  alt={product.productName}
+                  src={`${serverApi}/${product.ProductImages?.[0] || 'placeholder.jpg'}`}
+                  alt={product.ProductName || 'Product'}
                 />
               </div>
 
               <div className="antique-product-info">
                 <div className="antique-product-price-title">
                   <div className="antique-price">
-                    ${product.productPrice.toFixed(2)}
+                    ${(product.ProductPrice || 0).toFixed(2)}
                   </div>
-                  <h4>{product.productName}</h4>
+                  <h4>{product.ProductName || 'Unknown Product'}</h4>
                   <div className="antique-stars">
-                    {"★".repeat(product.productRating || 4)}
-                    {"☆".repeat(5 - (product.productRating || 4))}
+                    {"★".repeat(product.ProductRating || 4)}
+                    {"☆".repeat(5 - (product.ProductRating || 4))}
                   </div>
                 </div>
 
                 {viewMode === "list" && (
                   <p className="antique-product-description">
-                    {product.productDesc}
+                    {product.ProductDesc || 'No description available'}
                   </p>
                 )}
 
                 <div className="antique-product-actions">
                   <div className="antique-product-view-count">
-                    <Eye size={16} /> {product.productViews} views
+                    <Eye size={16} /> {product.ProductViews || 0} views
                   </div>
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
-                      animateToCart(e, `${serverApi}/${product.productImages[0]}`);
+                      animateToCart(e, `${serverApi}/${product.ProductImages?.[0] || 'placeholder.jpg'}`);
                       dispatch(
                         addToCart({
                           id: product._id,
-                          name: product.productName,
-                          price: product.productPrice,
-                          image: product.productImages[0],
+                          name: product.ProductName || 'Unknown Product',
+                          price: product.ProductPrice,
+                          image: product.ProductImages?.[0] || 'placeholder.jpg',
                           quantity: 1,
-                          size: product.productSize,
-                          tag: product.productTags,
-                          category: product.productCategory,
+                          size: product.ProductSize,
+                          tag: product.ProductTags,
+                          category: product.ProductCategory,
                         })
                       );
                     }}

@@ -49,28 +49,28 @@ const ProductDetail = () => {
        <div className="antique-product-detail-container">
       <div className="antique-product-detail-image">
         <img
-          src={`${serverApi}/${product.productImages[0]}`}
-          alt={product.productName}
+          src={`${serverApi}/${product.ProductImages?.[0] || 'placeholder.jpg'}`}
+          alt={product.ProductName || 'Product'}
         />
-        {product.productTags?.length && (
+        {product.ProductTags?.length && (
           <div className="antique-product-tag-badge">
-            {product.productTags[0].replace("_", " ")}
+            {product.ProductTags[0].replace("_", " ")}
           </div>
         )}
       </div>
 
       <div className="antique-product-detail-info">
-        <h1 className="antique-product-title">{product.productName}</h1>
+        <h1 className="antique-product-title">{product.ProductName || 'Unknown Product'}</h1>
 
-        <p className="antique-product-description">{product.productDesc}</p>
+        <p className="antique-product-description">{product.ProductDesc || 'No description available'}</p>
 
         <p className="antique-price">
-          ${product.productPrice.toFixed(2)}
+          ${(product.ProductPrice || 0).toFixed(2)}
         </p>
 
         <div className="antique-detail-bottom">
         <div className="antique-views">
-  <Eye size={16} /> {product.productViews} views
+  <Eye size={16} /> {product.ProductViews || 0} views
 </div>
 
           <button
@@ -79,13 +79,13 @@ const ProductDetail = () => {
               dispatch(
                 addToCart({
                   id: product._id,
-                  name: product.productName,
-                  price: product.productPrice,
-                  image: product.productImages[0],
+                  name: product.ProductName || 'Unknown Product',
+                  price: product.ProductPrice || 0,
+                  image: product.ProductImages?.[0] || 'placeholder.jpg',
                   quantity: 1,
-                  size: product.productSize, 
-                  tag: product.productTags,
-                  category: product.productCategory,
+                  size: product.ProductSize, 
+                  tag: product.ProductTags,
+                  category: product.ProductCategory,
                 })
               )
             }

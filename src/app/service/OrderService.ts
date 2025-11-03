@@ -17,7 +17,7 @@ class OrderService {
     return result.data;
   }
   public async saveOrderToDatabase(orderInput: OrderInput): Promise<any> {
-    const url = `${this.path}/api/order/save-success`;
+    const url = `${this.path}/api/order/save-paid-order`;
     const result = await axios.post(url, orderInput, { withCredentials: true });
     return result.data;
   }

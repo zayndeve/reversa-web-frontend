@@ -96,21 +96,21 @@ const OrderConfirmation = () => {
         setCartSnapshot([...cartItems]);
 
         const orderInput = {
-          shippingAddress: {
-            fullName: form.fullName,
-            phone: form.phone,
-            address: form.address,
-            city: form.city,
-            postalCode: form.postalCode,
-            country: form.country,
+          ShippingAddress: {
+            FullName: form.fullName,
+            Phone: form.phone,
+            Address: form.address,
+            City: form.city,
+            PostalCode: form.postalCode,
+            Country: form.country,
           },
-          paymentMethod: form.paymentMethod,
-          orderItems: cartItems.map((item:any) => ({
-            productId: item.id,
-            itemPrice: item.price,
-            itemQuantity: item.quantity,
-            productName: item.name,
-            productImage: item.image,
+          PaymentMethod: form.paymentMethod,
+          OrderItems: cartItems.map((item:any) => ({
+            ProductId: item.id,
+            ItemPrice: item.price,
+            ItemQuantity: item.quantity,
+            ProductName: item.name,
+            ProductImage: item.image,
           })),
         };
 

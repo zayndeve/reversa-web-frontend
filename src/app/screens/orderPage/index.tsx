@@ -9,7 +9,7 @@ export default function OrderPageRoutes() {
     <Routes>
       <Route path="/" element={<OrdersPage />} />
      
-      <Route path="/:orderId" element={<OrderConfirmation />} />
+      <Route path="/checkout" element={<OrderConfirmation />} />
       
     </Routes>
   );

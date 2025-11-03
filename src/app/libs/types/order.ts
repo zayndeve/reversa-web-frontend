@@ -1,31 +1,37 @@
 export interface ShippingAddress {
-  fullName: string;
-  phone: string;
-  address: string;
-  city: string;
-  postalCode: string;
-  country: string;
+  FullName: string;
+  Phone: string;
+  Address: string;
+  City: string;
+  PostalCode: string;
+  Country: string;
 }
 
 export interface OrderItemInput {
-  productId: string;
-  itemPrice: number;
-  itemQuantity: number;
-  productName: string; // ✅ NEW
-  productImage: string;
+  ProductId: string;
+  ItemPrice: number;
+  ItemQuantity: number;
+  ProductName: string; // ✅ NEW
+  ProductImage: string;
 }
 
 export interface OrderInput {
-  orderItems: OrderItemInput[];
-  paymentMethod: string;
-  shippingAddress: ShippingAddress;
+  OrderItems: OrderItemInput[];
+  PaymentMethod: string;
+  ShippingAddress: ShippingAddress;
 }
 
 export interface OrderResult {
-  _id: string;
-  memberId: string;
-  orderTotal: number;
-  orderDelivery: number;
-  createdAt: string;
-  updatedAt: string;
+  Id: string;
+  MemberId: string;
+  TotalAmount: number;
+  PaymentMethod: string;
+  OrderStatus: string;
+  ShippingAddress: ShippingAddress;
+  PreviewItem: {
+    Name: string;
+    Image: string;
+  };
+  CreatedAt: string;
+  UpdatedAt: string;
 }
