@@ -36,9 +36,9 @@ export default function LoginForm() {
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
 
-      // 🔥 Construct form data for the selected login field
+      // 🔥 Construct form data
       const form = new FormData();
-      form.append(loginMethod, formData[loginMethod]);
+      form.append("memberNick", formData.memberNick);
       form.append("memberPassword", formData.memberPassword);
 
       const res = await axios.post(`${apiUrl}/api/member/login`, form, {
