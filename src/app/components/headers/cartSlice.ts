@@ -89,7 +89,7 @@ export const selectCartItems = (state: any) => state.cart.items;
 
 export const selectCartTotal = (state: any) =>
   state.cart.items.reduce(
-    (sum: number, item: CartItem) => sum + item.price * item.quantity,
+    (sum: number, item: CartItem) => sum + (item.price || 0) * item.quantity,
     0
   );
 

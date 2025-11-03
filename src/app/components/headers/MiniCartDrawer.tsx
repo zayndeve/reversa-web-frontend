@@ -55,7 +55,7 @@ export default function MiniCartDrawer({
                 <Box className="item-info">
                   <Typography variant="body1">{item.name}</Typography>
                   <Typography variant="body2">
-                    {item.quantity} x ${item.price.toFixed(2)}
+                    {item.quantity} x ${(item.price || 0).toFixed(2)}
                   </Typography>
                 </Box>
                 <IconButton
