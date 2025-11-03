@@ -1,0 +1,30 @@
+.antique-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 20px 0;
+}
+
+.antique-pagination button {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.antique-pagination button:hover:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.antique-pagination button.active {
+  background-color: #223843;
+  color: #fff;
+  border-color: #223843;
+}
+
+.antique-pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
