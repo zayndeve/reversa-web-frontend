@@ -35,26 +35,27 @@ export default function LoginForm() {
   
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
-      const res = await axios.post(`${apiUrl}/api/member/login`, formData, {
+
+      // 🔥 Construct form data for the selected login field
+      const form = new FormData();
+      form.append(loginMethod, formData[loginMethod]);
+      form.append("memberPassword", formData.memberPassword);
+
+      const res = await axios.post(`${apiUrl}/api/member/login`, form, {
         withCredentials: true,
       });
-  
+
       // ✅ Save in localStorage
       localStorage.setItem("memberData", JSON.stringify(res.data.member));
-  
+
       // ✅ Update global context state
       setAuthMember(res.data.member);
-  
+
       // ✅ Navigate to account
       navigate("/account");
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed.");
     }
-  };
-  
-
-  const handleGoogleLogin = () => {
-    window.location.href = "http://localhost:5001/auth/member/google";
   };
 
   return (
@@ -113,21 +114,7 @@ export default function LoginForm() {
               >
                 Login
               </Button>
-              <Button
-                fullWidth
-                variant="contained"
-                className="google-signup-button"
-                startIcon={
-                  <img
-                    src="/img/google-logo.svg"
-                    alt="Google logo"
-                    style={{ width: "20px", height: "20px" }}
-                  />
-                }
-                onClick={handleGoogleLogin}
-              >
-                Login with Google
-              </Button>
+
             </Stack>
           </form>
           <Box className="auth-links">

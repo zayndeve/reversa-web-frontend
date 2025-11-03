@@ -45,9 +45,6 @@ export default function RegisterForm() {
 
     setFormData(updatedFormData);
   };
-  const handleGoogleSignup = () => {
-    window.location.href = "http://localhost:5001/auth/member/google";
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -207,21 +204,6 @@ export default function RegisterForm() {
                 Register
               </Button>
 
-              <Button
-                fullWidth
-                variant="contained"
-                className="google-signup-button"
-                startIcon={
-                  <img
-                    src="/img/google-logo.svg" // your local path to Google logo
-                    alt="Google logo"
-                    style={{ width: "20px", height: "20px" }}
-                  />
-                }
-                onClick={handleGoogleSignup}
-              >
-                Sign up with Google
-              </Button>
             </Stack>
           </form>
           <Typography mt={2} textAlign="center">
