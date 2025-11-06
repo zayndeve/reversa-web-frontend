@@ -12,6 +12,8 @@ import {
 import { NavLink, useNavigate } from "react-router-dom";
 import MiniCartDrawer from "./MiniCartDrawer";
 import { useState } from "react";
+import axios from "axios";
+import Cookies from "universal-cookie";
 import { useGlobal } from "../../../app/hooks/useGlobal";
 import { serverApi } from "../../../app/libs/config";
 import { Logout } from "@mui/icons-material";
@@ -25,6 +27,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 export function HomeNavbar() {
   const { authMember, setAuthMember } = useGlobal();
+  const cookies = new Cookies();
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const navigate = useNavigate();
@@ -40,11 +43,34 @@ export function HomeNavbar() {
     setAnchorEl(null);
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("memberData");
-    setAuthMember(null);
-    navigate("/");
-    handleMenuClose();
+  const handleLogout = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      
+      // ✅ Call backend logout endpoint to clear session
+      await axios.post(
+        `${apiUrl}/api/member/logout`,
+        {},
+        { withCredentials: true }
+      );
+      
+      console.log("✅ Logout successful - backend session cleared");
+    } catch (error) {
+      console.error("❌ Logout error:", error);
+    } finally {
+      // ✅ Clear localStorage
+      localStorage.removeItem("memberData");
+      
+      // ✅ Clear the accessToken cookie
+      cookies.remove("accessToken", { path: "/" });
+      
+      // ✅ Update global context
+      setAuthMember(null);
+      
+      // ✅ Navigate to home
+      navigate("/");
+      handleMenuClose();
+    }
   };
 
   const cartItems = useAppSelector(selectCartItems);
@@ -176,43 +202,47 @@ export function HomeNavbar() {
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
         transformOrigin={{ vertical: "top", horizontal: "right" }}
       >
-        {authMember && (
-          <Box textAlign="center" py={1.5}>
-            <Avatar
-              src={`${serverApi}/uploads/members/${authMember.memberImage}`}
-              sx={{ width: 56, height: 56, margin: "0 auto" }}
-            />
-            <Box mt={1} fontWeight="bold">
-              {authMember.memberNick}
-            </Box>
-          </Box>
-        )}
-
         {authMember ? (
-          <>
+          [
+            <Box
+              key="profile-header"
+              textAlign="center"
+              py={1.5}
+              sx={{ borderBottom: "1px solid #eee" }}
+            >
+              <Avatar
+                src={`${serverApi}/uploads/members/${authMember.memberImage}`}
+                sx={{ width: 56, height: 56, margin: "0 auto" }}
+              />
+              <Box mt={1} fontWeight="bold">
+                {authMember.memberNick}
+              </Box>
+            </Box>,
             <MenuItem
+              key="account"
               onClick={() => {
                 navigate("/account");
                 handleMenuClose();
               }}
             >
               My Page
-            </MenuItem>
+            </MenuItem>,
             <MenuItem
+              key="orders"
               onClick={() => {
                 navigate("/orders");
                 handleMenuClose();
               }}
             >
               Orders
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>
+            </MenuItem>,
+            <MenuItem key="logout" onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />
               </ListItemIcon>
               Logout
-            </MenuItem>
-          </>
+            </MenuItem>,
+          ]
         ) : (
           <MenuItem
             onClick={() => {
@@ -227,3 +257,4 @@ export function HomeNavbar() {
     </div>
   );
 }
+

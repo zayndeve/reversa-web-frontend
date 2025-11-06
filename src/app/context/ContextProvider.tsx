@@ -11,12 +11,24 @@ const ContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     const token = cookies.get("accessToken");
+    
+    // 🔥 IMPORTANT: If NO token in cookies, ALWAYS clear localStorage
+    // This prevents stale data from showing logged-in state
     if (!token) {
       localStorage.removeItem("memberData");
       setAuthMember(null);
     } else {
+      // ✅ Only load localStorage if token exists
+      // The token's validity will be verified by App.tsx calling getMyDetails()
       const stored = localStorage.getItem("memberData");
-      if (stored) setAuthMember(JSON.parse(stored));
+      if (stored) {
+        try {
+          setAuthMember(JSON.parse(stored));
+        } catch (err) {
+          console.error("Failed to parse memberData from localStorage");
+          setAuthMember(null);
+        }
+      }
     }
     setIsLoading(false); // ✅ context is ready
   }, []);

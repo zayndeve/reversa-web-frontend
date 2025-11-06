@@ -40,7 +40,8 @@ function App() {
     "/reset-password/:token",
   ].includes(location.pathname);
 
-  // ✅ Fetch current user on first load
+  // ✅ Fetch current user ONLY on first load
+  // This validates the session and ensures authMember is accurate
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -49,11 +50,14 @@ function App() {
         setAuthMember(member);
       } catch (err) {
         console.warn("No active session or failed to fetch user.");
+        // If session is invalid, make sure authMember is null
+        setAuthMember(null);
       }
     };
 
+    // Only fetch if we're not already loading
     fetchUser();
-  }, [setAuthMember]);
+  }, []); // ✅ Empty dependency array - runs ONLY once on mount
 
   return (
     <>
