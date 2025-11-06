@@ -15,14 +15,35 @@ const formatTagName = (tag: string): string => {
   // Map of known tags to their display names (ALL UPPERCASE, NO UNDERSCORES)
   const tagMap: Record<string, string> = {
     "hot": "HOT",
+    "NEW_ARRIVAL": "NEW ARRIVAL",
     "newArrival": "NEW ARRIVAL",
     "bestseller": "BESTSELLER",
+    "LIMITED_EDITION": "LIMITED EDITION",
     "limitedEdition": "LIMITED EDITION",
     "sale": "SALE",
     "exclusive": "EXCLUSIVE",
   };
   
-  return tagMap[tag] || tag.toUpperCase();
+  return tagMap[tag] || tag.toUpperCase().replace(/_/g, ' ');
+};
+
+// ✅ Helper to convert tag format to CSS class name
+const getTagClassName = (tag: string): string => {
+  const classMap: Record<string, string> = {
+    "hot": "hot",
+    "HOT": "hot",
+    "NEW_ARRIVAL": "newArrival",
+    "newArrival": "newArrival",
+    "BESTSELLER": "bestseller",
+    "bestseller": "bestseller",
+    "LIMITED_EDITION": "limitedEdition",
+    "limitedEdition": "limitedEdition",
+    "SALE": "sale",
+    "sale": "sale",
+    "EXCLUSIVE": "exclusive",
+    "exclusive": "exclusive",
+  };
+  return classMap[tag] || tag;
 };
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
@@ -66,7 +87,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         {product.productTags?.map((tag, idx) => (
           <span 
             key={idx} 
-            className={`product-badge ${tag}`}
+            className={`product-badge ${getTagClassName(tag)}`}
             style={{ color: '#fff', fontWeight: 'bold' }}
           >
             {formatTagName(tag)}

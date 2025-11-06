@@ -185,6 +185,7 @@
   width: fit-content;
   z-index: 10;
   display: inline-block;
+  background-color: #e74c3c !important;
 }
 
 /* Stack badges vertically starting from top-left using nth-child */

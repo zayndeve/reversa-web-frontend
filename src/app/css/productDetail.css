@@ -37,12 +37,42 @@
   top: 16px;
   left: 16px;
   background-color: #d64045;
-  color: #fff;
+  color: #fff !important;
   padding: 6px 12px;
   border-radius: 4px;
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 600 !important;
   text-transform: uppercase;
+}
+
+.antique-product-tag-badge.hot {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}
+
+.antique-product-tag-badge.bestseller {
+  background-color: #b57e28 !important;
+  color: #fff !important;
+}
+
+.antique-product-tag-badge.newArrival {
+  background-color: #27ae60 !important;
+  color: #fff !important;
+}
+
+.antique-product-tag-badge.limitedEdition {
+  background-color: #8e44ad !important;
+  color: #fff !important;
+}
+
+.antique-product-tag-badge.sale {
+  background-color: #e67e22 !important;
+  color: #fff !important;
+}
+
+.antique-product-tag-badge.exclusive {
+  background-color: #2c3e50 !important;
+  color: #fff !important;
 }
 
 .antique-product-detail-info {
