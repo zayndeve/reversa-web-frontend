@@ -9,6 +9,22 @@ import { useAppDispatch } from "../hooks";
 import { addToCart } from "../../../app/components/headers/cartSlice";
 import "../../css/productDetail.css";
 
+// ✅ Helper function to format tag names consistently
+const formatTagName = (tag: string): string => {
+  if (!tag) return "";
+  
+  // Map of known tags to their display names (ALL UPPERCASE, NO UNDERSCORES)
+  const tagMap: Record<string, string> = {
+    "hot": "HOT",
+    "newArrival": "NEW ARRIVAL",
+    "bestseller": "BESTSELLER",
+    "limitedEdition": "LIMITED EDITION",
+    "sale": "SALE",
+    "exclusive": "EXCLUSIVE",
+  };
+  
+  return tagMap[tag] || tag.toUpperCase();
+};
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -66,7 +82,7 @@ const ProductDetail = () => {
         />
         {product.productTags?.length && (
           <div className="antique-product-tag-badge">
-            {product.productTags[0].replace("_", " ")}
+            {formatTagName(product.productTags[0])}
           </div>
         )}
       </div>

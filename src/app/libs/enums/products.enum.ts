@@ -30,12 +30,12 @@ export enum ProductCategory {
   FASHION = "fashion",
 }
 export enum ProductTag {
-  HOT = "hot",
-  NEW_ARRIVAL = "newArrival",
-  BESTSELLER = "bestseller",
-  LIMITED_EDITION = "limitedEdition",
-  SALE = "sale",
-  EXCLUSIVE = "exclusive",
+  HOT = "HOT",
+  NEW_ARRIVAL = "NEW_ARRIVAL",
+  BESTSELLER = "BESTSELLER",
+  LIMITED_EDITION = "LIMITED_EDITION",
+  SALE = "SALE",
+  EXCLUSIVE = "EXCLUSIVE",
 }
 export enum ProductSortOption {
   NEWEST = "NEWEST",

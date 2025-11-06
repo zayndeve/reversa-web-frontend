@@ -177,25 +177,86 @@
 /* Fixed badge area */
 .product-badge {
   position: absolute;
+  font-weight: 600 !important;
+  color: #fff !important;
+  padding: 4px 12px !important;
+  border-radius: 2px;
+  font-size: 12px !important;
+  width: fit-content;
+  z-index: 10;
+  display: inline-block;
+}
+
+/* Stack badges vertically starting from top-left using nth-child */
+.product-img-wrapper span:nth-child(2) {
   top: 10px;
   left: 10px;
-  font-weight: 600;
-  color: #fff;
-  padding: 4px 12px;
-  border-radius: 2px;
-  font-size: 12px;
+}
+
+.product-img-wrapper span:nth-child(3) {
+  top: 35px;
+  left: 10px;
+}
+
+.product-img-wrapper span:nth-child(4) {
+  top: 60px;
+  left: 10px;
+}
+
+.product-img-wrapper span:nth-child(5) {
+  top: 85px;
+  left: 10px;
+}
+
+.product-img-wrapper span:nth-child(6) {
+  top: 110px;
+  left: 10px;
+}
+
+.product-img-wrapper span:nth-child(7) {
+  top: 135px;
+  left: 10px;
 }
 
 .product-badge.hot {
-  background-color: #e74c3c;
-  padding: 6px 16px;
-  font-size: 14px;
+  background-color: #e74c3c !important;
+  color: #fff !important;
 }
 
 .product-badge.bestseller {
-  background-color: #b57e28;
-  padding: 4px 12px;
-  font-size: 12px;
+  background-color: #b57e28 !important;
+  color: #fff !important;
+}
+
+.product-badge.newArrival {
+  background-color: #27ae60 !important;
+  color: #fff !important;
+}
+
+.product-badge.limitedEdition {
+  background-color: #8e44ad !important;
+  color: #fff !important;
+}
+
+.product-badge.sale {
+  background-color: #e67e22 !important;
+  color: #fff !important;
+}
+
+.product-badge.exclusive {
+  background-color: #2c3e50 !important;
+  color: #fff !important;
+}
+
+/* Fallback: also add hyphenated versions for compatibility */
+.product-badge.new-arrival {
+  background-color: #27ae60 !important;
+  color: #fff !important;
+}
+
+.product-badge.limited-edition {
+  background-color: #8e44ad !important;
+  color: #fff !important;
 }
 
 /* Product Info Area (always same height) */

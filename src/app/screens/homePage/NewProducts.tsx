@@ -8,6 +8,23 @@ import '../../css/homePage.css';
 import { useNavigate } from 'react-router-dom/dist';
 import ProductService from '../../../app/service/ProductService';
 
+// ✅ Helper function to format tag names consistently
+const formatTagName = (tag: string): string => {
+  if (!tag) return "";
+  
+  // Map of known tags to their display names (ALL UPPERCASE, NO UNDERSCORES)
+  const tagMap: Record<string, string> = {
+    "hot": "HOT",
+    "newArrival": "NEW ARRIVAL",
+    "bestseller": "BESTSELLER",
+    "limitedEdition": "LIMITED EDITION",
+    "sale": "SALE",
+    "exclusive": "EXCLUSIVE",
+  };
+  
+  return tagMap[tag] || tag.toUpperCase();
+};
+
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   const navigate = useNavigate();
 
@@ -45,12 +62,16 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             }
           }}
         />
-        {product.productTags?.includes(ProductTag.HOT) && (
-          <span className="product-badge hot">HOT</span>
-        )}
-        {product.productTags?.includes(ProductTag.BESTSELLER) && (
-          <span className="product-badge bestseller">BESTSELLER</span>
-        )}
+        {/* ✅ Show all product tags using formatter */}
+        {product.productTags?.map((tag, idx) => (
+          <span 
+            key={idx} 
+            className={`product-badge ${tag}`}
+            style={{ color: '#fff', fontWeight: 'bold' }}
+          >
+            {formatTagName(tag)}
+          </span>
+        ))}
       </div>
       <div className="product-info">
         <h3 className="product-name">{product.productName || 'Unknown Product'}</h3>

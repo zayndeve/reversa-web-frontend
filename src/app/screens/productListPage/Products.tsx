@@ -24,6 +24,23 @@ interface ProductsProps {
 
 const productService = new ProductService();
 
+// ✅ Helper function to format tag names consistently
+const formatTagName = (tag: string): string => {
+  if (!tag) return "";
+  
+  // Map of known tags to their display names (ALL UPPERCASE, NO UNDERSCORES)
+  const tagMap: Record<string, string> = {
+    "hot": "HOT",
+    "newArrival": "NEW ARRIVAL",
+    "bestseller": "BESTSELLER",
+    "limitedEdition": "LIMITED EDITION",
+    "sale": "SALE",
+    "exclusive": "EXCLUSIVE",
+  };
+  
+  return tagMap[tag] || tag.toUpperCase();
+};
+
 const Products: React.FC<ProductsProps> = ({
   viewMode,
   sortOrder,
@@ -130,7 +147,7 @@ const Products: React.FC<ProductsProps> = ({
               <div className="antique-product-image">
                 {product.productTags?.length && product.productTags.length > 0 && (
                   <div className="antique-product-tag">
-                    {product.productTags?.[0]?.replace("_", " ")}
+                    {formatTagName(product.productTags[0])}
                   </div>
                 )}
                 <img
