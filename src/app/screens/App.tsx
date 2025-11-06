@@ -47,15 +47,17 @@ function App() {
       try {
         const service = new MemberService();
         const member = await service.getMyDetails();
+        console.log("✅ Session valid - User authenticated:", member.memberNick);
         setAuthMember(member);
-      } catch (err) {
-        console.warn("No active session or failed to fetch user.");
-        // If session is invalid, make sure authMember is null
+      } catch (err: any) {
+        console.warn("❌ Session invalid - No active user session");
+        // If session is invalid, clear localStorage and state
+        localStorage.removeItem("memberData");
         setAuthMember(null);
       }
     };
 
-    // Only fetch if we're not already loading
+    // Validate session on app load
     fetchUser();
   }, []); // ✅ Empty dependency array - runs ONLY once on mount
 
