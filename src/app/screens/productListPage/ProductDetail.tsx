@@ -21,7 +21,8 @@ const ProductDetail = () => {
     const fetchData = async () => {
       try {
         if (id) {
-          const res = await new ProductService().getProductById(id); // ✅ use correct method
+        const res = await new ProductService().getPopularProduct(id);
+// ✅ use correct method
           // assumes this fetches and increases view count
           setProduct(res);
         }

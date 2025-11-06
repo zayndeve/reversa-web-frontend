@@ -1,6 +1,6 @@
 // ✅ API URL (adjust from your environment variables)
 export const serverApi: string =
-  process.env.REACT_APP_API_URL || "http://localhost:4000";
+  process.env.REACT_APP_API_URL || "http://localhost:5251";
 
 // ✅ General system messages for reuse
 export const Messages = {

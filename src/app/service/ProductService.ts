@@ -16,7 +16,9 @@ class ProductService {
         url += `&productCategory=${input.productCategory}`;
       if (input.search) url += `&search=${input.search}`;
 
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, {
+        withCredentials: true, // ✅ Send session cookie
+      });
       console.log("getNewArrivals", result);
       return result.data;
     } catch (err) {
@@ -34,7 +36,9 @@ class ProductService {
         url += `&productCategory=${input.productCategory}`;
       if (input.search) url += `&search=${input.search}`;
 
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, {
+        withCredentials: true, // ✅ Send session cookie
+      });
       console.log("getPopularProducts", result);
       return result.data;
     } catch (err) {
@@ -47,7 +51,9 @@ class ProductService {
   public async getPopularProduct(productId: string): Promise<Product> {
     try {
       const url = `${this.path}/api/product/popular/${productId}`;
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, {
+        withCredentials: true, // ✅ Send session cookie
+      });
       console.log("getPopularProduct", result);
       return result.data;
     } catch (err) {
@@ -82,7 +88,9 @@ class ProductService {
       }
 
       const url = `${this.path}/api/product/list?${params.toString()}`;
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, {
+        withCredentials: true, // ✅ Send session cookie
+      });
       console.log("getProductList", result);
       return result.data;
     } catch (err) {
@@ -94,7 +102,9 @@ class ProductService {
   public async getProductById(productId: string): Promise<Product> {
     try {
       const url = `${this.path}/api/product/${productId}`; // ✅ Fixed
-      const result = await axios.get(url, { withCredentials: true });
+      const result = await axios.get(url, {
+        withCredentials: true, // ✅ Send session cookie
+      });
       return result.data;
     } catch (err) {
       console.error("Error, getProductById:", err);

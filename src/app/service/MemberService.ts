@@ -8,7 +8,7 @@ class MemberService {
   public async updateMemberProfile(formData: FormData): Promise<Member> {
     const url = `${this.path}/api/member/update-self`;
     const result = await axios.post(url, formData, {
-      withCredentials: true, // keep session cookie for ASP.NET
+      withCredentials: true, // ✅ Send session cookie
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -22,23 +22,40 @@ class MemberService {
   public async getMyDetails(): Promise<Member> {
     try {
       const url = `${this.path}/api/member/member-self`;
+      console.log("🔐 getMyDetails: Calling", url);
+      console.log("🔐 getMyDetails: Cookies available:", document.cookie);
+      console.log("🔐 getMyDetails: withCredentials enabled in request");
+
       const result = await axios.get(url, {
-        withCredentials: true,
+        withCredentials: true, // ✅ Send session cookie with request
         headers: {
           "Cache-Control": "no-cache",
         },
       });
 
+      console.log("🔐 getMyDetails: SUCCESS! Status:", result.status);
+      console.log("🔐 getMyDetails: Response data:", result.data);
       const member: Member = result.data;
       localStorage.setItem("memberData", JSON.stringify(member)); // ✅ Keep localStorage in sync
       return member;
-    } catch (error) {
-      console.warn(
-        "Member detail endpoint not available, using localStorage data:",
-        error
+    } catch (error: any) {
+      console.error(
+        "🔐 getMyDetails: FAILED with status",
+        error.response?.status
       );
-      // Return localStorage data as fallback
-      return this.loadLocalMember() || ({} as Member);
+      console.error("🔐 getMyDetails: Response data:", error.response?.data);
+      console.error("🔐 getMyDetails: Error message:", error.message);
+      console.error("🔐 getMyDetails: Request config:", error.config);
+      console.warn(
+        "🔐 DIAGNOSIS: Backend returned 401 - session not recognized"
+      );
+      console.warn("🔐 Possible causes:");
+      console.warn("  1. Backend session middleware not configured");
+      console.warn("  2. Backend not setting session cookie on login");
+      console.warn("  3. CORS not allowing credentials");
+      console.warn("  4. Session expired or invalid");
+      // Session is invalid, let the validation logic handle it
+      throw error;
     }
   }
 

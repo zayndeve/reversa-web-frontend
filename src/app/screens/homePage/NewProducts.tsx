@@ -3,6 +3,7 @@ import { Product } from '../../../app/libs/types/product';
 import { ProductTag } from '../../../app/libs/enums/products.enum';
 import { serverApi } from '../../../app/libs/config';
 import Swiper from '../../../app/components/common/Swiper';
+import { Eye } from 'lucide-react';
 import '../../css/homePage.css';
 import { useNavigate } from 'react-router-dom/dist';
 import ProductService from '../../../app/service/ProductService';
@@ -56,6 +57,10 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
         <div className="product-price">
           <span className="price-now">${product.productPrice || 0}</span>
           <span className="price-old">${(product.productPrice || 0) + 15}</span>
+        </div>
+        <div className="product-views">
+          <Eye size={16} style={{ marginRight: '5px' }} />
+          {product.productViews ?? 0} Views
         </div>
         <div className="product-rating">
           {renderStars(product.productRating ?? 4)}
